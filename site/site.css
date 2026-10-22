@@ -13,7 +13,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace}
 header{position:sticky;top:0;z-index:20;background:rgba(14,22,34,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
 nav{display:flex;align-items:center;gap:22px;height:64px}
 .brand{display:flex;align-items:center;font-weight:800;font-size:20px;color:var(--text);letter-spacing:-.02em;margin-right:auto}
-.brand img{width:32px;height:32px;margin-right:11px}
+.brand img{width:44px;height:44px;margin-right:12px}
 .brand b{color:var(--app);font-weight:800}
 nav a{color:var(--muted);font-size:14px;font-weight:500}nav a:hover{color:var(--text)}
 nav a.btn{background:var(--app);color:#0B1220;padding:8px 16px;border-radius:9px;font-weight:700}
@@ -22,6 +22,7 @@ nav a.btn:hover{background:var(--apph);color:#0B1220}
 .hero{padding:76px 0 56px;border-bottom:1px solid var(--border);text-align:center;background:radial-gradient(900px 420px at 50% -12%,rgba(224,169,78,.16),transparent 70%)}
 .hero h1{font-size:48px;font-weight:800}
 .hero h1 span{color:var(--app)}
+.herofez{width:84px;height:84px;display:block;margin:0 auto 18px;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4))}
 .lead{color:var(--muted);font-size:19px;margin:20px auto 0;max-width:640px}
 .pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
 .pill{font-size:13px;color:var(--faint);border:1px solid var(--border);border-radius:99px;padding:6px 14px}
@@ -37,6 +38,7 @@ section h2{font-size:30px;font-weight:800;text-align:center}
 .chip{font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--border);border-radius:99px;padding:3px 11px}
 .chip.lin{color:#C9E7FF;border-color:rgba(111,160,208,.4)}
 .chip.win{color:#CFE8D8;border-color:rgba(91,196,140,.4)}
+.chip.and{color:#D8CFF0;border-color:rgba(160,130,224,.45)}
 .appdesc{color:var(--muted);font-size:15px;margin:12px 0 4px}
 .fixes{font-size:13px;color:var(--faint);margin-bottom:12px}
 .fixes b{color:var(--app);font-weight:700}

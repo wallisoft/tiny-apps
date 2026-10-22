@@ -7,6 +7,11 @@ Icon=icon.svg
 Category=UtilitiesApplication
 Description=Firefox is notoriously slow to update toolbar (extension) icons — change one and it clings to the old picture for days. **ff-refresh** clears the one cache responsible (`startupCache`) and reopens Firefox, so the icons redraw at once. Works with apt, Snap and Flatpak Firefox.
 
+@Download linux-deb
+Platform=linux
+Label=Ubuntu / Mint / Debian - .deb
+Url=https://github.com/wallisoft/tiny-apps/releases/download/ff-refresh-1.0/ff-refresh_1.0_all.deb
+
 @Install linux-run
 Platform=linux
 Label=run it

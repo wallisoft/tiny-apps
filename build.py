@@ -44,7 +44,7 @@ CATALOG = HERE / "catalog"
 SITE = HERE / "site"
 OUT = Path(os.environ.get("TINYAPPS_OUT") or (Path.home() / ".cache" / "tinyapps" / "site"))
 BASE = "https://tiny-apps.vml.onl"
-PLATFORMS = {"linux": ("lin", "Linux"), "windows": ("win", "Windows")}
+PLATFORMS = {"linux": ("lin", "Linux"), "windows": ("win", "Windows"), "android": ("and", "Android")}
 
 
 def step(text):
