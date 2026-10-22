@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="ff-refresh">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18232F"/><stop offset="1" stop-color="#0E1622"/></linearGradient>
+<linearGradient id="grn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6FE0A0"/><stop offset="1" stop-color="#39A86B"/></linearGradient>
+</defs>
+<rect width="300" height="300" rx="58" fill="url(#bg)"/>
+<rect x="1.5" y="1.5" width="297" height="297" rx="56.5" fill="none" stroke="rgba(255,255,255,.08)"/>
+<rect x="50" y="74" width="200" height="50" rx="14" fill="#1C2838" stroke="rgba(255,255,255,.08)"/>
+<circle cx="78" cy="99" r="9" fill="#34507A"/>
+<circle cx="110" cy="99" r="9" fill="#34507A"/>
+<circle cx="222" cy="99" r="11" fill="url(#grn)"/>
+<g transform="translate(100,138) scale(4.2)" fill="url(#grn)"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></g>
+<path d="M238 50 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 z" fill="#6FE0A0" opacity=".9"/>
+</svg>

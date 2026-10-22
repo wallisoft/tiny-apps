@@ -1,0 +1,39 @@
+# ff-refresh (Linux) - clear Firefox's startup/icon cache so toolbar icons redraw.
+# Run it with:   bash ff-refresh.txt -f     (or install it as a command - see tiny-apps.vml.onl)
+# Pass -f to close (and reopen) Firefox automatically. From tiny-apps.vml.onl - Wallisoft
+set -euo pipefail
+FORCE=0; [ "${1:-}" = "-f" ] && FORCE=1
+
+ROOTS=(
+  "$HOME/.mozilla/firefox"
+  "$HOME/snap/firefox/common/.mozilla/firefox"
+  "$HOME/.var/app/org.mozilla.firefox/.mozilla/firefox"
+)
+
+running() { pgrep -x firefox >/dev/null 2>&1; }
+if running; then
+  if [ "$FORCE" = 1 ]; then
+    echo "closing Firefox..."; pkill -x firefox 2>/dev/null || true
+    for i in $(seq 1 12); do running || break; sleep 1; done
+    pkill -9 -x firefox 2>/dev/null || true; sleep 1
+  else
+    echo "Firefox is running - close it, or run with -f"; exit 1
+  fi
+fi
+
+cleared=0
+for root in "${ROOTS[@]}"; do
+  [ -d "$root" ] || continue
+  for prof in "$root"/*/; do
+    [ -d "$prof" ] || continue
+    if [ -d "${prof}startupCache" ]; then
+      rm -rf "${prof}startupCache"; echo "  cleared  ${prof}startupCache"; cleared=1
+    fi
+  done
+done
+[ "$cleared" = 0 ] && echo "  (no startupCache found - is this the right Firefox build?)"
+
+if [ "$FORCE" = 1 ] && command -v firefox >/dev/null 2>&1; then
+  echo "reopening Firefox..."; setsid firefox >/dev/null 2>&1 < /dev/null &
+fi
+echo "done - toolbar icons rebuild on next launch."

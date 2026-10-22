@@ -1,0 +1,19 @@
+# ff-refresh (Windows) - clear Firefox's startupCache so toolbar icons redraw.
+# Closes Firefox, clears the cache, reopens it. From tiny-apps.vml.onl - Wallisoft
+Write-Host 'closing Firefox...'
+Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+Start-Sleep -Seconds 2
+$roots = @("$env:LOCALAPPDATA\Mozilla\Firefox\Profiles", "$env:APPDATA\Mozilla\Firefox\Profiles")
+$cleared = 0
+foreach ($r in $roots) {
+  if (Test-Path $r) {
+    Get-ChildItem $r -Directory | ForEach-Object {
+      $sc = Join-Path $_.FullName 'startupCache'
+      if (Test-Path $sc) { Remove-Item $sc -Recurse -Force -ErrorAction SilentlyContinue; Write-Host "  cleared $sc"; $cleared++ }
+    }
+  }
+}
+if ($cleared -eq 0) { Write-Host '  (no startupCache found)' }
+$ff = @("$env:ProgramFiles\Mozilla Firefox\firefox.exe", "${env:ProgramFiles(x86)}\Mozilla Firefox\firefox.exe") | Where-Object { Test-Path $_ } | Select-Object -First 1
+if ($ff) { Start-Process $ff; Write-Host 'reopening Firefox...' }
+Write-Host 'done - toolbar icons rebuild on launch.'

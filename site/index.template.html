@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinyApps &mdash; tiny tools that fix one thing, perfectly</title>
+<meta name="description" content="TinyApps is a little shop of one-job tools for Windows and Linux. A pasted line or a small download fixes one annoying thing. Free, no account, nothing left behind.">
+<meta property="og:title" content="TinyApps &mdash; tiny tools that fix one thing">
+<meta property="og:description" content="A little shop of one-job tools for Windows and Linux. One pasted line runs each. Free, no account.">
+<meta property="og:image" content="https://tiny-apps.vml.onl/fez.svg">
+<meta property="og:url" content="https://tiny-apps.vml.onl/">
+<link rel="icon" href="fez.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+%%JSONLD%%
+</head>
+<body>
+<header><div class="wrap"><nav>
+  <a class="brand" href="./"><img src="fez.svg" alt="">TinyApps</a>
+  <a href="#apps">Apps</a><a href="#about">About</a><a href="https://github.com/wallisoft/tiny-apps">Submit</a>
+  <a class="btn" href="#apps">Browse</a>
+</nav></div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>Tiny apps. <span>One line. Done.</span></h1>
+  <p class="lead">TinyApps is a little shop of one-job tools that each fix one annoying thing &mdash; perfectly. Paste a single line and it runs. Windows and Linux. Free, no account, and nothing left behind you can't remove in a breath.</p>
+  <div class="pills"><span class="pill">Windows &amp; Linux</span><span class="pill">Free forever</span><span class="pill">No account</span><span class="pill">Open, readable scripts</span></div>
+</div></div>
+
+<section id="apps"><div class="wrap">
+  <h2>The apps</h2>
+  <p class="sub">Each one does a single job. Copy the line for your system, paste it into a terminal, and that's it.</p>
+  <div class="gallery">
+
+%%CARDS%%
+
+  </div>
+</div></section>
+
+<section id="about" style="border-top:1px solid var(--border)"><div class="wrap">
+  <h2>What is TinyApps?</h2>
+  <p class="sub">A little shop of one-job tools from <a href="https://tiny-web.uk">Wallisoft</a>. No bloat, no telemetry, no sign-up &mdash; just readable scripts and small installable apps you can open before you run. Installed apps stick around and can be scheduled; one-shot scripts are there when you want them. More land here as they're built; several come from tinkering inside the bigger <a href="https://visualised.io">Visualised</a> family.</p>
+  <p class="sub" style="margin-top:18px">Got a tiny tool to add? They live in the open on GitHub &mdash; <a href="https://github.com/wallisoft/tiny-apps">wallisoft/tiny-apps</a>. Each app is one folder (a short <code>app.vml</code>, an icon, and its scripts or release downloads); open a pull request and it joins the shelf. The repo's <strong>Submitting an app</strong> guide walks you through it.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <div>TinyApps is made by <a href="https://github.com/wallisoft">Wallisoft</a> with Claude &middot; <a href="https://github.com/wallisoft/tiny-apps">open on GitHub</a> &middot; hosted on <a href="https://tiny-host.uk">tiny-host.uk</a></div>
+  <div>More from us: <a href="https://kato.vml.onl">KatoKVM</a> &middot; <a href="https://bob.vml.onl">Bob</a> &middot; <a href="https://topcat.vml.onl">TopCat</a> &middot; <a href="https://mountie.eur.bz">Mountie</a> &middot; <a href="https://visualised.io">Visualised</a></div>
+  <div><a href="https://tiny-web.uk/privacy.php">Privacy</a> &middot; <a href="https://tiny-web.uk/terms.php">Terms</a> &middot; <a href="mailto:hello@tiny-web.uk?subject=TinyApps">Contact</a></div>
+  <div>&copy; 2026 Wallisoft &middot; Eastbourne, East Sussex, England</div>
+</div></footer>
+
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.copy'); if(!b) return;
+  var code=b.parentNode.querySelector('code'); if(!code) return;
+  navigator.clipboard.writeText(code.textContent).then(function(){
+    var t=b.textContent; b.textContent='Copied ✓'; setTimeout(function(){b.textContent=t;},1400);
+  });
+});
+</script>
+</body>
+</html>

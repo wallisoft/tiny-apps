@@ -1,0 +1,13 @@
+# TinyApps: the shop window at https://tiny-apps.vml.onl.
+# Bob regenerates the whole site from catalog/<slug>/app.vml. See tools/bob/recipe.py.
+@Recipe TinyApps
+Version=1.0
+Icon=site/fez.svg
+Company=Wallisoft
+
+@Build Site
+Text=Build site
+Machine=here
+Kind=script
+Run=python3 tiny-apps/build.py {install}
+Results=~/.cache/tinyapps/site

@@ -1,0 +1,34 @@
+# ff-refresh - the first tiny-app. Edit this, the icon and the scripts; run Bob.
+@App ff-refresh
+Name=ff-refresh
+Platforms=linux, windows
+Fixes=stale / frozen Firefox toolbar & add-on icons that won't refresh.
+Icon=icon.svg
+Category=UtilitiesApplication
+Description=Firefox is notoriously slow to update toolbar (extension) icons — change one and it clings to the old picture for days. **ff-refresh** clears the one cache responsible (`startupCache`) and reopens Firefox, so the icons redraw at once. Works with apt, Snap and Flatpak Firefox.
+
+@Install linux-run
+Platform=linux
+Label=run it
+Cmd=curl -fsSL https://tiny-apps.vml.onl/apps/ff-refresh.txt | bash -s -- -f
+Note=closes & reopens Firefox and redraws the icons. Nothing installed.
+
+@Install linux-keep
+Platform=linux
+Label=or keep it as a command
+Cmd=sudo sh -c 'printf "#!/usr/bin/env bash\n" > /usr/local/bin/ff-refresh; curl -fsSL https://tiny-apps.vml.onl/apps/ff-refresh.txt >> /usr/local/bin/ff-refresh; chmod +x /usr/local/bin/ff-refresh'
+Note=then run `ff-refresh -f` any time.
+
+@Install windows
+Platform=windows
+Label=run in PowerShell
+Cmd=irm https://tiny-apps.vml.onl/apps/ff-refresh-ps1.txt | iex
+Note=paste into a normal PowerShell window — it closes Firefox, clears the cache and reopens it.
+
+@Script linux
+File=linux.txt
+Publish=apps/ff-refresh.txt
+
+@Script windows
+File=windows.txt
+Publish=apps/ff-refresh-ps1.txt
