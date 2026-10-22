@@ -28,7 +28,8 @@ TEXT_EXT = {".html", ".css", ".svg", ".txt", ".js", ".json", ".xml", ".md"}
 def rpc(method, params):
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
     req = urllib.request.Request(URL, data=body, headers={
-        "Content-Type": "application/json", "Authorization": "Bearer " + KEY})
+        "Content-Type": "application/json", "Authorization": "Bearer " + KEY,
+        "User-Agent": "TinyApps-CI/1.0"})
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.loads(r.read().decode())
 
