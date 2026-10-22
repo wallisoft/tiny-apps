@@ -1,0 +1,26 @@
+name: Publish TinyApps
+
+# Automated publish: when an approved PR lands on main, rebuild the shop window
+# and push it live to tiny-apps.vml.onl through the TinyHost gateway. No assistant,
+# no local machine - GitHub does it. (workflow_dispatch lets you re-publish by hand.)
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'catalog/**', 'site/**', 'build.py', 'publish.py', '.github/workflows/publish.yml' ]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build the site
+        run: TINYAPPS_OUT=dist python3 build.py
+      - name: Publish to tiny-apps.vml.onl
+        env:
+          TINYHOST_KEY: ${{ secrets.TINYHOST_KEY }}
+          TINYAPPS_OUT: dist
+        run: python3 publish.py
