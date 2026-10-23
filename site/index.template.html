@@ -40,7 +40,7 @@
       <button class="filter" data-f="verified">Verified</button>
     </div>
   </div>
-  <p class="count"><b id="shown">%%COUNT%%</b> of %%COUNT%% apps</p>
+  <p class="count"><b id="shown">%%COUNT%%</b> of <span id="total">%%COUNT%%</span> apps</p>
 
   <div class="grid" id="grid">
 
@@ -82,12 +82,66 @@ document.addEventListener('click',function(e){
   if(open){panel.removeAttribute('hidden');} else {panel.setAttribute('hidden','');}
   b.setAttribute('aria-expanded',open?'true':'false');
 });
-// search + filter
-(function(){
+// ---- unverified apps ----
+// Loaded client-side from unverified.json so a verified rebuild (CI regenerates index.html
+// from the reviewed catalog/) never wipes author uploads. unverified.json is author-supplied
+// and untrusted, so every card is built with DOM APIs (textContent, validated hrefs) — never innerHTML.
+var DLK={windows:['Windows','win','installer (.exe)'],deb:['.deb','deb','Ubuntu · Debian · Mint'],
+         appimage:['AppImage','appimage','any Linux'],apk:['Android','apk','sideload (.apk)']};
+var PLATL={linux:['lin','Linux'],windows:['win','Windows'],android:['and','Android']};
+function el(t,c){var e=document.createElement(t); if(c)e.className=c; return e;}
+function slugify(s){return String(s||'').toLowerCase().replace(/[^a-z0-9_-]+/g,'-').replace(/^-+|-+$/g,'')||'app';}
+function plain(s){return String(s||'').replace(/[*`]/g,'');}
+function safeUrl(u){u=String(u||''); return /^https?:\/\//i.test(u)?u:'';}
+function safeIcon(u){u=String(u||'');
+  if(/^https?:\/\//i.test(u))return u;
+  if(/^u\/[A-Za-z0-9_-]+\.(svg|png|jpe?g|webp)$/.test(u))return u;
+  return 'fez.svg';}
+function buildCard(a){
+  var plats=(a.platforms||[]).map(function(p){return String(p).toLowerCase();})
+              .filter(function(p){return PLATL[p];});
+  var card=el('article','card'); card.id=slugify(a.slug||a.name);
+  card.setAttribute('data-platforms',plats.join(' '));
+  card.setAttribute('data-verified','0');
+  card.setAttribute('data-search',((a.name||'')+' '+(a.description||'')+' '+(a.fixes||'')+' '+
+    plats.map(function(p){return PLATL[p][1];}).join(' ')).toLowerCase());
+  var top=el('div','card-top');
+  var img=el('img','icon'); img.src=safeIcon(a.icon); img.alt=(a.name||'')+' icon'; img.loading='lazy';
+  var idw=el('div','card-id'), nm=el('div','card-name'), h=el('h3'); h.textContent=a.name||a.slug||'App';
+  var badge=el('span','badge warn'); badge.textContent='⚠ Unverified';
+  badge.title='Uploaded by its author, not reviewed. Check the download before you run it.';
+  nm.appendChild(h); nm.appendChild(badge);
+  var chips=el('div','chips');
+  plats.forEach(function(p){var c=el('span','chip '+PLATL[p][0]); c.textContent=PLATL[p][1]; chips.appendChild(c);});
+  idw.appendChild(nm); idw.appendChild(chips); top.appendChild(img); top.appendChild(idw); card.appendChild(top);
+  var d=el('p','desc'); d.textContent=plain(a.description); card.appendChild(d);
+  if(a.fixes){var fx=el('p','fixes'), b=el('b'); b.textContent='Fixes: ';
+    fx.appendChild(b); fx.appendChild(document.createTextNode(plain(a.fixes))); card.appendChild(fx);}
+  var row=el('div','dls-row'), any=false, dls=a.downloads||[];
+  Object.keys(DLK).forEach(function(k){
+    var m=null; for(var i=0;i<dls.length;i++){if((dls[i].kind||'').toLowerCase()===k&&safeUrl(dls[i].url)){m=dls[i];break;}}
+    if(m){any=true; var link=el('a','dl '+k); link.href=safeUrl(m.url); link.rel='nofollow noopener';
+      var a1=el('span','dlk'); a1.textContent=DLK[k][0]; var a2=el('span','dlsub'); a2.textContent=DLK[k][2];
+      link.appendChild(a1); link.appendChild(a2); row.appendChild(link);}
+  });
+  if(any)card.appendChild(row);
+  return card;
+}
+function loadUnverified(){
+  return fetch('unverified.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():[];})
+    .then(function(list){
+      if(!Array.isArray(list)) return;
+      var grid=document.getElementById('grid');
+      list.forEach(function(a){try{grid.appendChild(buildCard(a));}catch(e){}});
+    }).catch(function(){});
+}
+// search + filter (run after unverified cards are in, so they're searchable too)
+function initSearch(){
   var q=document.getElementById('q'), grid=document.getElementById('grid'),
       cards=[].slice.call(grid.querySelectorAll('.card')),
-      shown=document.getElementById('shown'), none=document.getElementById('noresults'),
-      filter='all';
+      shown=document.getElementById('shown'), total=document.getElementById('total'),
+      none=document.getElementById('noresults'), filter='all';
+  if(total)total.textContent=cards.length;
   function apply(){
     var term=(q.value||'').trim().toLowerCase(), n=0;
     cards.forEach(function(c){
@@ -109,7 +163,9 @@ document.addEventListener('click',function(e){
   });
   var clear=document.getElementById('clearq');
   if(clear)clear.addEventListener('click',function(e){e.preventDefault();q.value='';apply();q.focus();});
-})();
+  apply();
+}
+loadUnverified().then(initSearch);
 </script>
 </body>
 </html>
