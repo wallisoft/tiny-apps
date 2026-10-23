@@ -1,0 +1,20 @@
+@App topcat
+Name=TopCat
+Verified=yes
+Platforms=linux, windows
+Fixes=machines you can't poke from the sofa
+Icon=icon.svg
+Category=DeveloperApplication
+Description=Ask your machines' apps to do things from anywhere, safely — a window shows who asked what, with pause and stop controls. The agent travels **inside** the app, so a fresh machine needs nothing else.
+
+@Download win
+Kind=windows
+Url=https://github.com/wallisoft/tiny-apps/releases/download/topcat-0.1/TopCat-Setup.exe
+
+@Download deb
+Kind=deb
+Url=https://github.com/wallisoft/tiny-apps/releases/download/topcat-0.1/topcat_0.1_amd64.deb
+
+@Download appimage
+Kind=appimage
+Url=https://github.com/wallisoft/tiny-apps/releases/download/topcat-0.1/TopCat-0.1-x86_64.AppImage

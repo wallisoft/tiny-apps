@@ -1,0 +1,12 @@
+@App tinysms
+Name=TinySMS
+Verified=yes
+Platforms=android
+Fixes=email that can't reach a phone
+Icon=icon.svg
+Category=CommunicationApplication
+Description=Turn your phone into a **TinySMS** node — it sends and receives on its own SIM for the gateway. One signed 3 MB APK that asks only for what it uses.
+
+@Download apk
+Kind=apk
+Url=https://github.com/wallisoft/tiny-apps/releases/download/tinysms-2.7/TinySMS.apk
